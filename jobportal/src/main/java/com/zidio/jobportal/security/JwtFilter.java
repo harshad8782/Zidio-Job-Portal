@@ -1,7 +1,7 @@
 package com.zidio.jobportal.security;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -36,8 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7); // Remove "Bearer "
-
+            String token = authHeader.substring(7);
             String email = jwtUtil.extractEmail(token);
 
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -46,8 +45,11 @@ public class JwtFilter extends OncePerRequestFilter {
                 if (user != null) {
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(
-                                    user.getEmail(), null,
-                                    Arrays.asList(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
+                                    user.getEmail(),
+                                    null,
+                                    Collections.singletonList(
+                                            new SimpleGrantedAuthority("ROLE_" + user.getRole().name())
+                                    )
                             );
 
                     SecurityContextHolder.getContext().setAuthentication(authToken);
@@ -57,4 +59,14 @@ public class JwtFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
+    /**
+     * ✅ This method tells Spring NOT to apply this filter to certain paths
+     */
+    @Override
+protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    String path = request.getRequestURI();
+    return path.startsWith("/api/auth");
+}
+
 }

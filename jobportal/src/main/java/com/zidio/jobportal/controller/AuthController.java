@@ -19,6 +19,11 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
         AuthResponse response = authService.register(request);
+        System.out.println("📥 REGISTER REQ:");
+    System.out.println("Name: " + request.getName());
+    System.out.println("Email: " + request.getEmail());
+    System.out.println("Password: " + request.getPassword());
+    System.out.println("Role: " + request.getRole());
         return ResponseEntity.ok(response);
     }
 
@@ -28,3 +33,4 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 }
+

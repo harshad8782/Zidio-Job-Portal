@@ -1,4 +1,5 @@
 package com.zidio.jobportal.entity;
+import com.zidio.jobportal.enums.Role;
 
 import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;

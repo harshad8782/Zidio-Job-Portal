@@ -1,24 +1,23 @@
 package com.zidio.jobportal.dto;
 
-import com.zidio.jobportal.entity.Role;
+// ❌ Remove import of enums.Role
 
 public class RegisterRequest {
 
     private String name;
     private String email;
     private String password;
-    private Role role;
+    private String role; // 🔁 use String instead of Role for now
 
     public RegisterRequest() {}
 
-    public RegisterRequest(String name, String email, String password, Role role) {
+    public RegisterRequest(String name, String email, String password, String role) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    // Getters and setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -28,6 +27,6 @@ public class RegisterRequest {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public Role getRole() { return role; }
-    public void setRole(Role role) { this.role = role; }
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 }

@@ -10,6 +10,7 @@ import com.zidio.jobportal.dto.RegisterRequest;
 import com.zidio.jobportal.entity.User;
 import com.zidio.jobportal.repository.UserRepository;
 import com.zidio.jobportal.security.JwtUtil;
+import com.zidio.jobportal.enums.Role;
 
 @Service
 public class AuthService {
@@ -34,7 +35,9 @@ public class AuthService {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(request.getRole());
+        //  user.setRole(request.getRole());
+        user.setRole(Role.valueOf(request.getRole().toUpperCase()));
+
 
         userRepository.save(user);
 
