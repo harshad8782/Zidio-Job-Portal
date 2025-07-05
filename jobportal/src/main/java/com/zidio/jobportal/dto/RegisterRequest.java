@@ -1,13 +1,10 @@
 package com.zidio.jobportal.dto;
 
-// ❌ Remove import of enums.Role
-
 public class RegisterRequest {
-
     private String name;
     private String email;
     private String password;
-    private String role; // 🔁 use String instead of Role for now
+    private String role;
 
     public RegisterRequest() {}
 
