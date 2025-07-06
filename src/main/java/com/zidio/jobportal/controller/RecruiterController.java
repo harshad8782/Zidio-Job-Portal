@@ -16,6 +16,11 @@ public class RecruiterController {
     public ResponseEntity<RecruiterDTO> getByEmail(@PathVariable String email) {
         return ResponseEntity.ok(recruiterService.getRecruiterByEmail(email));
     }
+    @GetMapping("/id/{id}")
+    public ResponseEntity<RecruiterDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(recruiterService.getById(id));
+    }
+
 
     @PostMapping
     public ResponseEntity<RecruiterDTO> createOrUpdate(@RequestBody RecruiterDTO dto) {

@@ -25,6 +25,13 @@ public class RecruiterService {
         return mapToDTO(recruiter);
     }
 
+    public RecruiterDTO getById(Long id) {
+    Recruiter recruiter = recruiterRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Recruiter not found"));
+            return mapToDTO(recruiter); // ensure this method exists
+    }
+
+
     private RecruiterDTO mapToDTO(Recruiter recruiter) {
         return new RecruiterDTO(
             recruiter.getId(),

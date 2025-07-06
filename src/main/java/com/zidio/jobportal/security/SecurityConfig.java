@@ -38,7 +38,15 @@ public class SecurityConfig {
             .cors(cors -> corsConfigurationSource()) // Allow CORS
             .csrf(csrf -> csrf.disable()) // Disable CSRF for APIs
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**", "/api/recruiters/**", "/hello").permitAll() // ✅ ALLOW login, register, hello
+                .requestMatchers(
+                    "/api/auth/**",
+                                "/api/recruiters/**",
+                                "/api/students/**",
+                                "/api/jobPosts/**",
+                                "api/jobapplications",
+                                "/hello"
+                ).permitAll()
+
                 //.antMatchers("/api/recruiters/**").permitAll()
                 .anyRequest().authenticated()
             )
