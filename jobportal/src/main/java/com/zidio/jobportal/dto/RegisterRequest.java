@@ -1,10 +1,11 @@
 package com.zidio.jobportal.dto;
 
 public class RegisterRequest {
+
     private String name;
     private String email;
     private String password;
-    private String role;
+    private String role; // We use String here for flexible deserialization
 
     public RegisterRequest() {}
 
