@@ -15,134 +15,130 @@ A full-stack web application to manage student-internship-job interactions using
 ---
 
 ## 📦 Authentication APIs
+```markdown
+# ZIDIO Connect - Postman Testing Flow
 
-### ✅ Register (Student / Recruiter)
-```http
-POST /api/auth/register
+## 🔐 1. Register Users (Student / Recruiter)
+POST http://localhost:8080/api/auth/register
 Content-Type: application/json
-```
-```json
+
 {
-  "name": "John",
-  "email": "john@example.com",
+  "name": "Harshad",
+  "email": "harshad3@example.com",
   "password": "123456",
-  "role": "STUDENT" // or "RECRUITER"
+  "role": "STUDENT"
 }
-```
 
----
+# OR
 
-### ✅ Login
-```http
-POST /api/auth/login
-Content-Type: application/json
-```
-```json
 {
-  "email": "john@example.com",
+  "name": "HR Manager",
+  "email": "recruiter@example.com",
+  "password": "123456",
+  "role": "RECRUITER"
+}
+
+
+## 🔑 2. Login to Get JWT Token
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "harshad3@example.com",
   "password": "123456"
 }
-```
 
-✅ Copy the `token` from the response and use in Authorization headers:
-```
-Authorization: Bearer <token>
-```
-
----
-
-## 🧑‍🎓 STUDENT FLOW
-
-### 🔹 Create / Update Student Profile
-```http
-POST /api/students
-Authorization: Bearer <token>
-Content-Type: application/json
-```
-```json
+> 📥 Response:
 {
-  "id": 1,
-  "name": "Student One",
-  "email": "student1@example.com",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "message": "Login Successful"
+}
+
+
+## 🧪 3. Test Hello Endpoint (Optional)
+GET http://localhost:8080/hello
+
+
+## 👤 4. Create or Update Student Profile
+POST http://localhost:8080/api/students
+Authorization: Bearer <STUDENT_TOKEN>
+Content-Type: application/json
+
+{
+  "id": null,
+  "name": "Harshad",
+  "email": "harshad3@example.com",
   "phone": "9876543210",
-  "qualification": "BTech",
-  "resumeleURL": "https://link.to/resume.pdf"
+  "qualification": "B.Tech",
+  "resumeleURL": "https://link.to/resume"
 }
-```
 
-### 🔹 Get Student by Email
-```http
-GET /api/students/email/student1@example.com
-Authorization: Bearer <token>
-```
 
-### 🔹 Get Student by ID
-```http
-GET /api/students/id/1
-Authorization: Bearer <token>
-```
+## 🔍 5. Get Student by Email
+GET http://localhost:8080/api/students/email/harshad3@example.com
 
----
 
-## 🧑‍💼 RECRUITER FLOW
-
-### 🔹 Create Recruiter Profile
-```http
-POST /api/recruiters
-Authorization: Bearer <token>
+## 🏢 6. Create or Update Recruiter Profile
+POST http://localhost:8080/api/recruiters
+Authorization: Bearer <RECRUITER_TOKEN>
 Content-Type: application/json
-```
-```json
-{
-  "name": "Recruiter One",
-  "email": "recruiter1@example.com",
-  "company": "Tech Corp",
-  "position": "HR Manager"
-}
-```
 
-### 🔹 Post a Job
-```http
-POST /api/jobPosts
-Authorization: Bearer <token>
+{
+  "id": null,
+  "name": "Recruiter Name",
+  "email": "recruiter@example.com",
+  "companyName": "ZIDIO Tech",
+  "contactNumber": "1234567890"
+}
+
+
+## 🎯 7. Post a Job (Recruiter)
+POST http://localhost:8080/api/jobPosts
+Authorization: Bearer <RECRUITER_TOKEN>
 Content-Type: application/json
-```
-```json
+
 {
-  "jobTitle": "Software Intern",
-  "jobDescription": "Work on backend services",
-  "jobLocation": "Remote",
-  "jobType": "Internship",
-  "companyName": "Tech Corp",
-  "postedByEmail": "recruiter1@example.com",
-  "postedDate": "2025-07-07"
+  "id": null,
+  "jobTitle": "Java Developer",
+  "jobDescription": "Build REST APIs",
+  "jobLocation": "Mumbai",
+  "jobType": "Full Time",
+  "companyName": "ZIDIO Tech",
+  "postedByEmail": "recruiter@example.com",
+  "postedDate": "2025-07-06T00:00:00.000+05:30"
 }
+
+
+## 🔍 8. Search Jobs
+GET http://localhost:8080/api/jobPosts/jobTitle?jobTitle=Java Developer
+GET http://localhost:8080/api/jobPosts/jobType?jobType=Full Time
+GET http://localhost:8080/api/jobPosts/companyName?companyName=ZIDIO Tech
+GET http://localhost:8080/api/jobPosts/recruiter?email=recruiter@example.com
+
+
+## ✅ 9. Apply to a Job (Student)
+POST http://localhost:8080/api/jobapplications
+Authorization: Bearer <STUDENT_TOKEN>
+Content-Type: application/json
+
+{
+  "id": null,
+  "studentEmail": "harshad3@example.com",
+  "jobPostId": 1,      # Replace with actual jobPost ID
+  "applicationDate": "2025-07-06T00:00:00.000+05:30",
+  "status": "PENDING"
+}
+
+
+## 📄 10. View Applications by Student
+GET http://localhost:8080/api/jobapplications/student?email=harshad3@example.com
+Authorization: Bearer <STUDENT_TOKEN>
+
+
+## 🧾 11. View Applications by Recruiter
+GET http://localhost:8080/api/jobapplications/recruiter?email=recruiter@example.com
+Authorization: Bearer <RECRUITER_TOKEN>
 ```
-
-### 🔹 Get Jobs Posted by Recruiter
-```http
-GET /api/jobPosts/recruiter?email=recruiter1@example.com
-Authorization: Bearer <token>
-```
-
-### 🔹 Filter Jobs by Title / Type / Company
-```http
-GET /api/jobPosts/jobTitle?jobTitle=Software Intern
-GET /api/jobPosts/jobType?jobType=Internship
-GET /api/jobPosts/companyName?companyName=Tech Corp
-Authorization: Bearer <token>
-```
-
----
-
-## ✅ Test Endpoint
-
-```http
-GET /hello
-```
-
-Returns: `Hello world!` (used to verify JWT authentication)
-
 ---
 
 ## 🔐 Notes
