@@ -166,6 +166,10 @@ Authorization: Bearer <RECRUITER_TOKEN>
   - View applicants (RECRUITER)
   - Prevent duplicate applications
 
+## admin 
+ - admin dashboard analysis
+ - admin can block and unblock both student and recuiter
+ - admin can view status of both student and recuiter in real time active(online/offline)
 ---
 
 
