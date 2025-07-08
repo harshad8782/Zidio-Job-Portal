@@ -172,4 +172,30 @@ Authorization: Bearer <RECRUITER_TOKEN>
  - admin can view status of both student and recuiter in real time active(online/offline)
 ---
 
+## Key Modules
+ - Authentication Module
+    - Student, Recruiter, and Admin logins
+    - Registration and role-based access
+ 
+ - Student Dashboard
+    - Profile management
+    - Resume upload
+    - View and apply to jobs/internships
+    - Application status tracking
+ 
+ - Recruiter Dashboard
+    - Post job/internship listings
+    - View applications
+    - Shortlist or reject candidates
+ 
+ - Admin Panel
+    - User management (approve/block)
+    - Content moderation
+    - System analytics and reporting
+ 
+ - Job/Internship Management
+    - Listing, searching, and filtering opportunities
+    - Bookmarking options
+    - Notifications and updates
+
 
