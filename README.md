@@ -198,4 +198,7 @@ Authorization: Bearer <RECRUITER_TOKEN>
     - Bookmarking options
     - Notifications and updates
 
+## Email notifcation
+  - JavaMailSender
 
+## upload file(resume)
