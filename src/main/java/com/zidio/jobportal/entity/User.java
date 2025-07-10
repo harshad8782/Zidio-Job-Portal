@@ -2,8 +2,6 @@ package com.zidio.jobportal.entity;
 import com.zidio.jobportal.enums.Role;
 
 import jakarta.persistence.*;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +20,12 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(name = "is_blocked")
+    private Boolean isBlocked = false;
+    
+    @Column(name = "is_online")
+    private Boolean isOnline = false;
 
     public User() {}
 
@@ -46,4 +50,21 @@ public class User {
 
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
+
+    // Getters and setters
+public Boolean getIsBlocked() {
+    return isBlocked;
+}
+
+public void setIsBlocked(Boolean isBlocked) {
+    this.isBlocked = isBlocked;
+}
+
+public Boolean getIsOnline() {
+    return isOnline;
+}
+
+public void setIsOnline(Boolean isOnline) {
+    this.isOnline = isOnline;
+}
 }

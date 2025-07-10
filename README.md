@@ -123,11 +123,12 @@ Content-Type: application/json
 
 {
   "id": null,
-  "studentEmail": "harshad3@example.com",
-  "jobPostId": 1,      # Replace with actual jobPost ID
+  "studentId": 1,
+  "jobPostId": 1,      
   "applicationDate": "2025-07-06T00:00:00.000+05:30",
   "status": "PENDING"
 }
+
 
 
 ## 📄 10. View Applications by Student
@@ -138,6 +139,29 @@ Authorization: Bearer <STUDENT_TOKEN>
 ## 🧾 11. View Applications by Recruiter
 GET http://localhost:8080/api/jobapplications/recruiter?email=recruiter@example.com
 Authorization: Bearer <RECRUITER_TOKEN>
+
+## 🧾 12. Admin block/unblock
+POST http://localhost:8080/api/admin/block
+Authorization: Bearer <ADMIN_TOKEN>
+Content-Type: application/json
+
+{
+  "email": "harshad@example.com", #student ID
+  "block": true
+}
+
+## 🧾 13. Admin view status
+GET http://localhost:8080/api/admin/status
+Authorization: Bearer <ADMIN_TOKEN>
+
+## 🧾 14. Admin view users
+GET http://localhost:8080/api/admin/users
+Authorization: Bearer <ADMIN_TOKEN>
+
+## 🧾 13. Admin view summary
+GET http://localhost:8080/api/admin/summary
+Authorization: Bearer <ADMIN_TOKEN>
+
 ```
 ---
 

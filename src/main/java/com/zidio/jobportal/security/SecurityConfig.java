@@ -46,6 +46,8 @@ public class SecurityConfig {
                                 "api/jobapplications",
                                 "/hello"
                 ).permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
 
                 //.antMatchers("/api/recruiters/**").permitAll()
                 .anyRequest().authenticated()
