@@ -226,3 +226,5 @@ Authorization: Bearer <ADMIN_TOKEN>
   - JavaMailSender
 
 ## upload file(resume)
+
+## admin analytics total jobpost and jobapplication
