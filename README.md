@@ -232,3 +232,22 @@ Authorization: Bearer <ADMIN_TOKEN>
 ## checking
 
 ## FuCKS
+
+## Folder Sturcutre
+JOBPORTAL/
+├── src/
+│   └── main/
+│       └── java/
+│           └── com/
+│               └── zidio/
+│                   └── jobportal/
+│                       ├── controller/
+│                       ├── dto/
+│                       ├── entity/
+│                       ├── enums/
+│                       ├── repository/
+│                       ├── security/
+│                       ├── service/
+│                       └── JobportalApplication.java
+├── src/main/resources/
+│   └── application.properties
