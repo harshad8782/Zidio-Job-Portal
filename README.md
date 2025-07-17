@@ -230,3 +230,5 @@ Authorization: Bearer <ADMIN_TOKEN>
 ## admin analytics total jobpost and jobapplication
 
 ## checking
+
+## FuCKS
