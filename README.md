@@ -229,11 +229,8 @@ Authorization: Bearer <ADMIN_TOKEN>
 
 ## admin analytics total jobpost and jobapplication
 
-## checking
-
-## FuCKS
-
 ## Folder Sturcutre
+---
 JOBPORTAL/
 ├── src/
 │   └── main/
@@ -251,3 +248,5 @@ JOBPORTAL/
 │                       └── JobportalApplication.java
 ├── src/main/resources/
 │   └── application.properties
+---
+
