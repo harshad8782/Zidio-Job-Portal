@@ -231,6 +231,7 @@ Authorization: Bearer <ADMIN_TOKEN>
 
 ## Folder Sturcutre
 ---
+```
 JOBPORTAL/
 ├── src/
 │   └── main/
@@ -248,5 +249,6 @@ JOBPORTAL/
 │                       └── JobportalApplication.java
 ├── src/main/resources/
 │   └── application.properties
+```
 ---
 
