@@ -1,30 +1,49 @@
-# Job Portal API - Postman Testing Guide
+# Job Portal API - Complete Testing Guide
 
-This document provides a complete, step-by-step Postman flow for testing the Job Portal API, including the correct Bearer token to use and sample JSON bodies for each request.
+A comprehensive REST API for job portal management with authentication, role-based access control, and complete CRUD operations.
 
-## Base URL
+## 🚀 Base Configuration
+
 ```
-http://localhost:8080
+Base URL: http://localhost:8080
+Authentication: Bearer Token (JWT)
 ```
-
-## Authentication Flow
-
-The API uses Bearer token authentication. You'll need to:
-1. Register users (no token required)
-2. Login to get JWT tokens
-3. Use tokens in subsequent requests via `Authorization: Bearer <token>`
 
 ---
 
-## Complete Testing Flow
+## 📋 Complete Testing Flow
 
-### 1. Register Recruiter
-**No token needed**
+### Phase 1: Authentication Setup
 
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/auth/register`
+#### 1. Register Admin User
+**Method:** `POST` | **Endpoint:** `/api/auth/register` | **Token:** None
 
-**Request Body:**
+```json
+{
+  "username": "admin1",
+  "firstName": "Admin",
+  "lastName": "User",
+  "phone": "0000000000",
+  "email": "admin@company.com",
+  "password": "admin123",
+  "role": "ADMIN"
+}
+```
+
+#### 2. Login Admin
+**Method:** `POST` | **Endpoint:** `/api/auth/login` | **Token:** None
+
+```json
+{
+  "email": "admin@company.com",
+  "password": "admin123"
+}
+```
+💾 **Save response token as "Admin Token"**
+
+#### 3. Register Recruiter
+**Method:** `POST` | **Endpoint:** `/api/auth/register` | **Token:** None
+
 ```json
 {
   "username": "recruiter1",
@@ -37,99 +56,20 @@ The API uses Bearer token authentication. You'll need to:
 }
 ```
 
----
+#### 4. Login Recruiter
+**Method:** `POST` | **Endpoint:** `/api/auth/login` | **Token:** None
 
-### 2. Login Recruiter
-**No token needed**
-
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/auth/login`
-
-**Request Body:**
 ```json
 {
   "email": "alice@company.com",
   "password": "password123"
 }
 ```
+💾 **Save response token as "Recruiter Token"**
 
-**⚠️ Important:** **Save the returned token as "Recruiter Token"**
+#### 5. Register Student
+**Method:** `POST` | **Endpoint:** `/api/auth/register` | **Token:** None
 
----
-
-### 3. Create Recruiter Profile
-**Use Recruiter Token**
-
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/recruiters`
-
-**Header:** `Authorization: Bearer <Recruiter Token>`
-
-**Request Body:**
-```json
-{
-  "companyName": "Tech Corp",
-  "companyDescription": "Leading tech company",
-  "website": "http://techcorp.com",
-  "companyLogo": "http://techcorp.com/logo.png",
-  "designation": "HR Manager",
-  "companyAddress": "123 Tech Street",
-  "isVerified": true
-}
-```
-
----
-
-### 4. Get Recruiter by ID
-**Use Recruiter Token**
-
-**Method:** `GET`  
-**URL:** `http://localhost:8080/api/recruiters/id/{id}`
-
-**Header:** `Authorization: Bearer <Recruiter Token>`
-
----
-
-### 5. Create Job Post
-**Use Recruiter Token**
-
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/jobPosts`
-
-**Header:** `Authorization: Bearer <Recruiter Token>`
-
-**Request Body:**
-```json
-{
-  "jobTitle": "Software Engineer",
-  "jobDescription": "Develop and maintain software.",
-  "jobLocation": "Remote",
-  "jobType": "Full-time",
-  "companyName": "Tech Corp",
-  "postedByEmail": "alice@company.com",
-  "postedDate": "2025-07-19T10:00:00Z"
-}
-```
-
----
-
-### 6. Get Job Posts by Recruiter Email
-**Use Recruiter Token**
-
-**Method:** `GET`  
-**URL:** `http://localhost:8080/api/jobPosts/recruiter?email=alice@company.com`
-
-**Header:** `Authorization: Bearer <Recruiter Token>`
-
----
-
-### 7. Register Student
-**No token needed**
-
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/auth/register`
-
-**Request Body:**
 ```json
 {
   "username": "student1",
@@ -142,35 +82,39 @@ The API uses Bearer token authentication. You'll need to:
 }
 ```
 
----
+#### 6. Login Student
+**Method:** `POST` | **Endpoint:** `/api/auth/login` | **Token:** None
 
-### 8. Login Student
-**No token needed**
-
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/auth/login`
-
-**Request Body:**
 ```json
 {
   "email": "john@example.com",
   "password": "password123"
 }
 ```
-
-**⚠️ Important:** **Save the returned token as "Student Token"**
+💾 **Save response token as "Student Token"**
 
 ---
 
-### 9. Create/Update Student Profile
-**Use Student Token**
+### Phase 2: Profile Creation
 
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/students`
+#### 7. Create Recruiter Profile
+**Method:** `POST` | **Endpoint:** `/api/recruiters` | **Token:** Recruiter
 
-**Header:** `Authorization: Bearer <Student Token>`
+```json
+{
+  "companyName": "Tech Corp",
+  "companyDescription": "Leading tech company",
+  "website": "http://techcorp.com",
+  "companyLogo": "http://techcorp.com/logo.png",
+  "designation": "HR Manager",
+  "companyAddress": "123 Tech Street",
+  "isVerified": true
+}
+```
 
-**Request Body:**
+#### 8. Create Student Profile
+**Method:** `POST` | **Endpoint:** `/api/students` | **Token:** Student
+
 ```json
 {
   "collegeName": "ABC College",
@@ -187,80 +131,36 @@ The API uses Bearer token authentication. You'll need to:
 
 ---
 
-### 10. Get Student by ID
-**Use Student Token**
+### Phase 3: Job Management
 
-**Method:** `GET`  
-**URL:** `http://localhost:8080/api/students/id/{id}`
+#### 9. Create Job Post
+**Method:** `POST` | **Endpoint:** `/api/jobPosts` | **Token:** Recruiter
 
-**Header:** `Authorization: Bearer <Student Token>`
-
----
-
-## Summary
-
-* Use the **Recruiter's token** for recruiter and job post endpoints.
-* Use the **Student's token** for student endpoints.
-* **Registration and login do not require a token.**
-
-## Token Management
-
-| Endpoint Type | Required Token |
-|---------------|----------------|
-| Registration (`/api/auth/register`) | None |
-| Login (`/api/auth/login`) | None |
-| Recruiter endpoints (`/api/recruiters/*`) | Recruiter Token |
-| Job Posts endpoints (`/api/jobPosts/*`) | Recruiter Token |
-| Student endpoints (`/api/students/*`) | Student Token |
-
-## Quick Setup Checklist
-
-1. ✅ Start your Job Portal API server on `localhost:8080`
-2. ✅ Register a recruiter (Step 1)
-3. ✅ Login recruiter and save token (Step 2)
-4. ✅ Register a student (Step 7)
-5. ✅ Login student and save token (Step 8)
-6. ✅ Use appropriate tokens for protected endpoints
-
-## Common Headers
-
-For all authenticated requests, include:
-```
-Authorization: Bearer <your-jwt-token>
-Content-Type: application/json
+```json
+{
+  "jobTitle": "Software Engineer",
+  "jobDescription": "Develop and maintain software applications",
+  "jobLocation": "Remote",
+  "jobType": "Full-time",
+  "companyName": "Tech Corp",
+  "postedByEmail": "alice@company.com",
+  "postedDate": "2025-07-19T10:00:00Z"
+}
 ```
 
-## Notes
+#### 10. Get Job Posts by Recruiter
+**Method:** `GET` | **Endpoint:** `/api/jobPosts/recruiter?email=alice@company.com` | **Token:** Recruiter
 
-- All timestamps should be in ISO 8601 format (e.g., `2025-07-19T10:00:00Z`)
-- Replace placeholder values like `{id}` with actual IDs from previous responses
-- Tokens expire based on your JWT configuration - re-login if you get 401 errors
-- Make sure your API server is running before testing
-
----
-
-## Job Application Testing Flow
-
-For testing "apply for job" and related features in Postman, follow this flow:
-
-### Prerequisites
-* Register and login as a student to get a Bearer token.
-* Create a student profile (already fixed to associate with authenticated user).
-* Create a job post (as recruiter/admin).
+#### 11. Get All Job Posts
+**Method:** `GET` | **Endpoint:** `/api/jobPosts` | **Token:** Any
 
 ---
 
-### 11. Apply for Job
-**Use Student Token**
+### Phase 4: Job Applications
 
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/jobapplications`
+#### 12. Apply for Job
+**Method:** `POST` | **Endpoint:** `/api/jobapplications` | **Token:** Student
 
-**Headers:**
-* `Authorization: Bearer <student_token>`
-* `Content-Type: application/json`
-
-**Request Body:**
 ```json
 {
   "resumeLink": "https://example.com/resume.pdf",
@@ -268,54 +168,31 @@ For testing "apply for job" and related features in Postman, follow this flow:
   "jobPostId": 2
 }
 ```
+*Note: Use actual IDs from your database*
 
-*Note: Use the actual studentId and jobPostId from your database*
+#### 13. Get Applications by Student
+**Method:** `GET` | **Endpoint:** `/api/jobapplications/student/{studentId}` | **Token:** Student
 
----
-
-### 12. Get Applications by Student
-**Use Student Token**
-
-**Method:** `GET`  
-**URL:** `http://localhost:8080/api/jobapplications/student/{studentId}`
-
-**Headers:**
-* `Authorization: Bearer <student_token>`
-
-*Replace `{studentId}` with the actual student ID*
+#### 14. Get Applications by Job Post
+**Method:** `GET` | **Endpoint:** `/api/jobapplications/job/{jobPostId}` | **Token:** Recruiter
 
 ---
 
-### 13. Get Applications by Job
-**Use Recruiter Token**
+### Phase 5: Profile Management
 
-**Method:** `GET`  
-**URL:** `http://localhost:8080/api/jobapplications/job/{jobPostId}`
+#### 15. Get Recruiter by ID
+**Method:** `GET` | **Endpoint:** `/api/recruiters/id/{id}` | **Token:** Recruiter
 
-**Headers:**
-* `Authorization: Bearer <recruiter_token>` (or admin token)
-
-*Replace `{jobPostId}` with the actual job post ID*
+#### 16. Get Student by ID
+**Method:** `GET` | **Endpoint:** `/api/students/id/{id}` | **Token:** Student
 
 ---
 
----
+### Phase 6: Admin Operations
 
-## Complete API Endpoints Reference
+#### 17. Block/Unblock User
+**Method:** `POST` | **Endpoint:** `/api/admin/block` | **Token:** Admin
 
-### 1. Admin Features (`/api/admin`)
-
-#### Block/Unblock User
-**Use Admin Token**
-
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/admin/block`
-
-**Headers:**
-* `Authorization: Bearer <admin_token>`
-* `Content-Type: application/json`
-
-**Request Body:**
 ```json
 {
   "userId": 1,
@@ -323,177 +200,61 @@ For testing "apply for job" and related features in Postman, follow this flow:
 }
 ```
 
-#### Get All User Statuses
-**Use Admin Token**
+#### 18. Get All User Statuses
+**Method:** `GET` | **Endpoint:** `/api/admin/status` | **Token:** Admin
 
-**Method:** `GET`  
-**URL:** `http://localhost:8080/api/admin/status`
-
-**Headers:**
-* `Authorization: Bearer <admin_token>`
-
-#### Dashboard Summary
-**Use Admin Token**
-
-**Method:** `GET`  
-**URL:** `http://localhost:8080/api/admin/summary`
-
-**Headers:**
-* `Authorization: Bearer <admin_token>`
+#### 19. Get Dashboard Summary
+**Method:** `GET` | **Endpoint:** `/api/admin/summary` | **Token:** Admin
 
 ---
 
-### 2. Auth Features (`/api/auth`)
+## 🔐 Authentication Headers
 
-#### Register
-**No Token Required**
-
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/auth/register`
-
-**Request Body:**
-```json
-{
-  "name": "John",
-  "email": "john@example.com",
-  "password": "pass",
-  "role": "STUDENT"
-}
+For all protected endpoints, include:
+```
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
 ```
 
-#### Login
-**No Token Required**
+## 📊 Token Usage Matrix
 
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/auth/login`
+| Endpoint Category | Required Token |
+|-------------------|----------------|
+| `/api/auth/*` | None |
+| `/api/admin/*` | Admin Token |
+| `/api/recruiters/*` | Recruiter Token |
+| `/api/jobPosts/*` | Recruiter Token (POST), Any Token (GET) |
+| `/api/students/*` | Student Token |
+| `/api/jobapplications/*` | Student Token (Apply), Student/Recruiter Token (View) |
 
-**Request Body:**
-```json
-{
-  "email": "john@example.com",
-  "password": "pass"
-}
-```
+## ⚡ Quick Start Checklist
 
----
+- [ ] Start API server on `localhost:8080`
+- [ ] Register Admin, Recruiter, and Student users
+- [ ] Login each user type and save tokens
+- [ ] Create profiles for Recruiter and Student
+- [ ] Create job posts as Recruiter
+- [ ] Apply for jobs as Student
+- [ ] Test admin operations
 
-### 3. Job Post Features (`/api/jobPosts`)
+## 🔍 Testing Tips
 
-#### Create Job Post
-**Use Recruiter Token**
+**Database IDs:** Always use actual IDs from your database responses, not the example values.
 
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/jobPosts`
+**Token Expiry:** If you get 401 errors, re-login to get fresh tokens.
 
-**Headers:**
-* `Authorization: Bearer <recruiter_token>`
-* `Content-Type: application/json`
+**Timestamps:** Use ISO 8601 format: `2025-07-19T10:00:00Z`
 
-**Request Body:**
-```json
-{
-  "title": "Java Dev",
-  "companyName": "ABC",
-  "jobType": "Full-Time"
-}
-```
+**Security:** Student operations are restricted to the authenticated user's own data.
 
-#### Get by Recruiter
-**Use Recruiter Token**
+## 🛠️ Troubleshooting
 
-**Method:** `GET`  
-**URL:** `http://localhost:8080/api/jobPosts/recruiter?email=...`
+**Foreign Key Errors:** Ensure referenced IDs exist in the database before making requests.
 
-**Headers:**
-* `Authorization: Bearer <recruiter_token>`
+**Authentication Errors:** Verify you're using the correct token type for each endpoint.
+
+**Profile Creation:** Create user accounts before attempting to create profiles.
 
 ---
 
-### 4. Job Application Features (`/api/jobapplications`)
-
-#### Apply for Job
-**Use Student Token**
-
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/jobapplications`
-
-**Headers:**
-* `Authorization: Bearer <student_token>`
-* `Content-Type: application/json`
-
-**Request Body:**
-```json
-{
-  "resumeLink": "...",
-  "studentId": 1,
-  "jobPostId": 2
-}
-```
-
-#### Get Applications by Student
-**Use Student Token**
-
-**Method:** `GET`  
-**URL:** `http://localhost:8080/api/jobapplications/student/{studentId}`
-
-**Headers:**
-* `Authorization: Bearer <student_token>`
-
----
-
-### 5. Recruiter Features (`/api/recruiters`)
-
-#### Create/Update Recruiter
-**Use Recruiter Token**
-
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/recruiters`
-
-**Headers:**
-* `Authorization: Bearer <recruiter_token>`
-* `Content-Type: application/json`
-
-**Request Body:**
-```json
-{
-  "companyName": "ABC"
-}
-```
-
----
-
-### 6. Student Features (`/api/students`)
-
-#### Create/Update Student
-**Use Student Token**
-
-**Method:** `POST`  
-**URL:** `http://localhost:8080/api/students`
-
-**Headers:**
-* `Authorization: Bearer <student_token>`
-* `Content-Type: application/json`
-
-**Request Body:**
-```json
-{
-  "collegeName": "XYZ"
-}
-```
-
----
-
-## Important Notes
-
-**Security:**
-* The studentId must match the authenticated user. For best security, you should fetch the student entity by the authenticated user's email in the service, not from the request body.
-
-**Troubleshooting:**
-* If you get a foreign key error, ensure both `studentId` and `jobPostId` exist in your database.
-* Make sure to use the correct tokens for each endpoint type.
-
----
-
-Let me know if you need help with any specific request or response!
-
-*Happy testing! 🚀*
+🎉 **Happy Testing!** Need help with specific requests? Check the endpoint documentation above!

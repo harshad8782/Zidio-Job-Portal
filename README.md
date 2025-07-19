@@ -17,150 +17,241 @@ A full-stack web application to manage student-internship-job interactions using
 ## 📦 Authentication APIs
 ```markdown
 # ZIDIO Connect - Postman Testing Flow
+## 📋 Complete Testing Flow
 
-## 🔐 1. Register Users (Student / Recruiter)
-POST http://localhost:8080/api/auth/register
-Content-Type: application/json
+### Phase 1: Authentication Setup
 
+#### 1. Register Admin User
+**Method:** `POST` | **Endpoint:** `/api/auth/register` | **Token:** None
+
+```json
 {
-  "name": "Harshad",
-  "email": "harshad3@example.com",
-  "password": "123456",
-  "role": "STUDENT"
+  "username": "admin1",
+  "firstName": "Admin",
+  "lastName": "User",
+  "phone": "0000000000",
+  "email": "admin@company.com",
+  "password": "admin123",
+  "role": "ADMIN"
 }
+```
 
-# OR
+#### 2. Login Admin
+**Method:** `POST` | **Endpoint:** `/api/auth/login` | **Token:** None
 
+```json
 {
-  "name": "HR Manager",
-  "email": "recruiter@example.com",
-  "password": "123456",
+  "email": "admin@company.com",
+  "password": "admin123"
+}
+```
+💾 **Save response token as "Admin Token"**
+
+#### 3. Register Recruiter
+**Method:** `POST` | **Endpoint:** `/api/auth/register` | **Token:** None
+
+```json
+{
+  "username": "recruiter1",
+  "firstName": "Alice",
+  "lastName": "Smith",
+  "phone": "9876543210",
+  "email": "alice@company.com",
+  "password": "password123",
   "role": "RECRUITER"
 }
+```
 
+#### 4. Login Recruiter
+**Method:** `POST` | **Endpoint:** `/api/auth/login` | **Token:** None
 
-## 🔑 2. Login to Get JWT Token
-POST http://localhost:8080/api/auth/login
-Content-Type: application/json
-
+```json
 {
-  "email": "harshad3@example.com",
-  "password": "123456"
+  "email": "alice@company.com",
+  "password": "password123"
 }
+```
+💾 **Save response token as "Recruiter Token"**
 
-> 📥 Response:
+#### 5. Register Student
+**Method:** `POST` | **Endpoint:** `/api/auth/register` | **Token:** None
+
+```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "message": "Login Successful"
+  "username": "student1",
+  "firstName": "John",
+  "lastName": "Doe",
+  "phone": "1234567890",
+  "email": "john@example.com",
+  "password": "password123",
+  "role": "STUDENT"
 }
+```
 
+#### 6. Login Student
+**Method:** `POST` | **Endpoint:** `/api/auth/login` | **Token:** None
 
-## 🧪 3. Test Hello Endpoint (Optional)
-GET http://localhost:8080/hello
-
-
-## 👤 4. Create or Update Student Profile
-POST http://localhost:8080/api/students
-Authorization: Bearer <STUDENT_TOKEN>
-Content-Type: application/json
-
+```json
 {
-  "id": null,
-  "name": "Harshad",
-  "email": "harshad3@example.com",
-  "phone": "9876543210",
-  "qualification": "B.Tech",
-  "resumeleURL": "https://link.to/resume"
+  "email": "john@example.com",
+  "password": "password123"
 }
+```
+💾 **Save response token as "Student Token"**
 
+---
 
-## 🔍 5. Get Student by Email
-GET http://localhost:8080/api/students/email/harshad3@example.com
+### Phase 2: Profile Creation
 
+#### 7. Create Recruiter Profile
+**Method:** `POST` | **Endpoint:** `/api/recruiters` | **Token:** Recruiter
 
-## 🏢 6. Create or Update Recruiter Profile
-POST http://localhost:8080/api/recruiters
-Authorization: Bearer <RECRUITER_TOKEN>
-Content-Type: application/json
-
+```json
 {
-  "id": null,
-  "name": "Recruiter Name",
-  "email": "recruiter@example.com",
-  "companyName": "ZIDIO Tech",
-  "contactNumber": "1234567890"
+  "companyName": "Tech Corp",
+  "companyDescription": "Leading tech company",
+  "website": "http://techcorp.com",
+  "companyLogo": "http://techcorp.com/logo.png",
+  "designation": "HR Manager",
+  "companyAddress": "123 Tech Street",
+  "isVerified": true
 }
+```
 
+#### 8. Create Student Profile
+**Method:** `POST` | **Endpoint:** `/api/students` | **Token:** Student
 
-## 🎯 7. Post a Job (Recruiter)
-POST http://localhost:8080/api/jobPosts
-Authorization: Bearer <RECRUITER_TOKEN>
-Content-Type: application/json
-
+```json
 {
-  "id": null,
-  "jobTitle": "Java Developer",
-  "jobDescription": "Build REST APIs",
-  "jobLocation": "Mumbai",
-  "jobType": "Full Time",
-  "companyName": "ZIDIO Tech",
-  "postedByEmail": "recruiter@example.com",
-  "postedDate": "2025-07-06T00:00:00.000+05:30"
+  "collegeName": "ABC College",
+  "degree": "B.Tech",
+  "branch": "CSE",
+  "graduationYear": 2025,
+  "cgpa": 8.5,
+  "skills": "Java, Spring Boot",
+  "bio": "Enthusiastic learner",
+  "resumeURL": "http://example.com/resume.pdf",
+  "profilePicture": "http://example.com/pic.jpg"
 }
+```
 
+---
 
-## 🔍 8. Search Jobs
-GET http://localhost:8080/api/jobPosts/jobTitle?jobTitle=Java Developer
-GET http://localhost:8080/api/jobPosts/jobType?jobType=Full Time
-GET http://localhost:8080/api/jobPosts/companyName?companyName=ZIDIO Tech
-GET http://localhost:8080/api/jobPosts/recruiter?email=recruiter@example.com
+### Phase 3: Job Management
 
+#### 9. Create Job Post
+**Method:** `POST` | **Endpoint:** `/api/jobPosts` | **Token:** Recruiter
 
-## ✅ 9. Apply to a Job (Student)
-POST http://localhost:8080/api/jobapplications
-Authorization: Bearer <STUDENT_TOKEN>
-Content-Type: application/json
-
+```json
 {
-  "id": null,
+  "jobTitle": "Software Engineer",
+  "jobDescription": "Develop and maintain software applications",
+  "jobLocation": "Remote",
+  "jobType": "Full-time",
+  "companyName": "Tech Corp",
+  "postedByEmail": "alice@company.com",
+  "postedDate": "2025-07-19T10:00:00Z"
+}
+```
+
+#### 10. Get Job Posts by Recruiter
+**Method:** `GET` | **Endpoint:** `/api/jobPosts/recruiter?email=alice@company.com` | **Token:** Recruiter
+
+#### 11. Get All Job Posts
+**Method:** `GET` | **Endpoint:** `/api/jobPosts` | **Token:** Any
+
+---
+
+### Phase 4: Job Applications
+
+#### 12. Apply for Job
+**Method:** `POST` | **Endpoint:** `/api/jobapplications` | **Token:** Student
+
+```json
+{
+  "resumeLink": "https://example.com/resume.pdf",
   "studentId": 1,
-  "jobPostId": 1,      
-  "applicationDate": "2025-07-06T00:00:00.000+05:30",
-  "status": "PENDING"
+  "jobPostId": 2
 }
+```
+*Note: Use actual IDs from your database*
 
+#### 13. Get Applications by Student
+**Method:** `GET` | **Endpoint:** `/api/jobapplications/student/{studentId}` | **Token:** Student
 
+#### 14. Get Applications by Job Post
+**Method:** `GET` | **Endpoint:** `/api/jobapplications/job/{jobPostId}` | **Token:** Recruiter
 
-## 📄 10. View Applications by Student
-GET http://localhost:8080/api/jobapplications/student?email=harshad3@example.com
-Authorization: Bearer <STUDENT_TOKEN>
+---
 
+### Phase 5: Profile Management
 
-## 🧾 11. View Applications by Recruiter
-GET http://localhost:8080/api/jobapplications/recruiter?email=recruiter@example.com
-Authorization: Bearer <RECRUITER_TOKEN>
+#### 15. Get Recruiter by ID
+**Method:** `GET` | **Endpoint:** `/api/recruiters/id/{id}` | **Token:** Recruiter
 
-## 🧾 12. Admin block/unblock
-POST http://localhost:8080/api/admin/block
-Authorization: Bearer <ADMIN_TOKEN>
-Content-Type: application/json
+#### 16. Get Student by ID
+**Method:** `GET` | **Endpoint:** `/api/students/id/{id}` | **Token:** Student
 
+---
+
+### Phase 6: Admin Operations
+
+#### 17. Block/Unblock User
+**Method:** `POST` | **Endpoint:** `/api/admin/block` | **Token:** Admin
+
+```json
 {
-  "email": "harshad@example.com", #student ID
+  "userId": 1,
   "block": true
 }
+```
 
-## 🧾 13. Admin view status
-GET http://localhost:8080/api/admin/status
-Authorization: Bearer <ADMIN_TOKEN>
+#### 18. Get All User Statuses
+**Method:** `GET` | **Endpoint:** `/api/admin/status` | **Token:** Admin
 
-## 🧾 14. Admin view users
-GET http://localhost:8080/api/admin/users
-Authorization: Bearer <ADMIN_TOKEN>
+#### 19. Get Dashboard Summary
+**Method:** `GET` | **Endpoint:** `/api/admin/summary` | **Token:** Admin
 
-## 🧾 13. Admin view summary
-GET http://localhost:8080/api/admin/summary
-Authorization: Bearer <ADMIN_TOKEN>
+---
+
+## 🔐 Authentication Headers
+
+For all protected endpoints, include:
+```
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+```
+
+## 📊 Token Usage Matrix
+
+| Endpoint Category | Required Token |
+|-------------------|----------------|
+| `/api/auth/*` | None |
+| `/api/admin/*` | Admin Token |
+| `/api/recruiters/*` | Recruiter Token |
+| `/api/jobPosts/*` | Recruiter Token (POST), Any Token (GET) |
+| `/api/students/*` | Student Token |
+| `/api/jobapplications/*` | Student Token (Apply), Student/Recruiter Token (View) |
+
+## ⚡ Quick Start Checklist
+
+- [ ] Start API server on `localhost:8080`
+- [ ] Register Admin, Recruiter, and Student users
+- [ ] Login each user type and save tokens
+- [ ] Create profiles for Recruiter and Student
+- [ ] Create job posts as Recruiter
+- [ ] Apply for jobs as Student
+- [ ] Test admin operations
+
+## 🔍 Testing Tips
+
+**Database IDs:** Always use actual IDs from your database responses, not the example values.
+
+**Token Expiry:** If you get 401 errors, re-login to get fresh tokens.
+
+**Timestamps:** Use ISO 8601 format: `2025-07-19T10:00:00Z`
+
+**Security:** Student operations are restricted to the authenticated user's own data.
 
 ```
 ---
