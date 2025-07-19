@@ -1,30 +1,124 @@
-```markdown
 # 💼 ZIDIO Connect – Job & Internship Portal
 
-A full-stack web application to manage student-internship-job interactions using Spring Boot, JWT Security, and MySQL.
+A comprehensive full-stack web application for managing student-internship-job interactions built with Spring Boot, JWT Security, and MySQL.
+
+## 📋 Table of Contents
+- [Getting Started](#-getting-started)
+- [Tech Stack](#️-tech-stack)
+- [Project Structure](#-project-structure)
+- [Key Modules](#-key-modules)
+- [API Testing Guide](#-api-testing-guide)
+- [Authentication & Authorization](#-authentication--authorization)
+- [Features](#-features)
 
 ---
 
 ## 🚀 Getting Started
 
+### Prerequisites
+- Java 17+
+- MySQL 8.0+
+- Maven 3.8+
+
+### Quick Start
 ```bash
+# Clone the repository
+git clone <repository-url>
+cd zidio-connect
+
+# Install dependencies
 ./mvnw clean install
+
+# Run the application
 ./mvnw spring-boot:run
+```
+
+The application will start on `http://localhost:8080`
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| **Java 17** | Backend Language |
+| **Spring Boot** | Framework |
+| **Spring Security** | Authentication & Authorization |
+| **JWT** | Token-based Authentication |
+| **MySQL** | Database |
+| **JavaMailSender** | Email Notifications |
+| **Maven** | Build Tool |
+
+---
+
+## 📁 Project Structure
+
+```
+JOBPORTAL/
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── com/
+│       │       └── zidio/
+│       │           └── jobportal/
+│       │               ├── controller/          # REST Controllers
+│       │               ├── dto/                 # Data Transfer Objects
+│       │               ├── entity/              # JPA Entities
+│       │               ├── enums/               # Enumerations
+│       │               ├── repository/          # Data Access Layer
+│       │               ├── security/            # Security Configuration
+│       │               ├── service/             # Business Logic
+│       │               └── JobportalApplication.java
+│       └── resources/
+│           ├── application.properties           # Configuration
+│           └── static/                          # Static Resources
+└── pom.xml                                      # Maven Dependencies
 ```
 
 ---
 
-## 📦 Authentication APIs
-```markdown
-# ZIDIO Connect - Postman Testing Flow
-## 📋 Complete Testing Flow
+## 🔧 Key Modules
+
+### 1. Authentication Module
+- **Multi-role Registration**: Student, Recruiter, Admin
+- **JWT-based Authentication**: Secure token system
+- **Role-based Access Control**: Endpoint protection by user roles
+
+### 2. Student Dashboard
+- **Profile Management**: Complete profile creation and updates
+- **Resume Upload**: File upload functionality
+- **Job Applications**: View and apply to opportunities
+- **Application Tracking**: Real-time status monitoring
+
+### 3. Recruiter Dashboard
+- **Job Posting**: Create and manage job/internship listings
+- **Application Management**: View and process applications
+- **Candidate Actions**: Shortlist or reject applicants
+- **Company Profile**: Manage company information
+
+### 4. Admin Panel
+- **User Management**: Block/unblock users
+- **Content Moderation**: Oversee platform content
+- **Analytics Dashboard**: System metrics and reporting
+- **Real-time Monitoring**: User activity tracking
+
+### 5. Job/Internship Management
+- **Advanced Search**: Filter by location, type, company
+- **Bookmarking**: Save interesting opportunities
+- **Notifications**: Email updates and alerts
+- **Duplicate Prevention**: One application per job per student
+
+---
+
+## 🧪 API Testing Guide
 
 ### Phase 1: Authentication Setup
 
 #### 1. Register Admin User
-**Method:** `POST` | **Endpoint:** `/api/auth/register` | **Token:** None
+```http
+POST /api/auth/register
+Content-Type: application/json
 
-```json
 {
   "username": "admin1",
   "firstName": "Admin",
@@ -37,9 +131,10 @@ A full-stack web application to manage student-internship-job interactions using
 ```
 
 #### 2. Login Admin
-**Method:** `POST` | **Endpoint:** `/api/auth/login` | **Token:** None
+```http
+POST /api/auth/login
+Content-Type: application/json
 
-```json
 {
   "email": "admin@company.com",
   "password": "admin123"
@@ -48,9 +143,10 @@ A full-stack web application to manage student-internship-job interactions using
 💾 **Save response token as "Admin Token"**
 
 #### 3. Register Recruiter
-**Method:** `POST` | **Endpoint:** `/api/auth/register` | **Token:** None
+```http
+POST /api/auth/register
+Content-Type: application/json
 
-```json
 {
   "username": "recruiter1",
   "firstName": "Alice",
@@ -63,9 +159,10 @@ A full-stack web application to manage student-internship-job interactions using
 ```
 
 #### 4. Login Recruiter
-**Method:** `POST` | **Endpoint:** `/api/auth/login` | **Token:** None
+```http
+POST /api/auth/login
+Content-Type: application/json
 
-```json
 {
   "email": "alice@company.com",
   "password": "password123"
@@ -74,9 +171,10 @@ A full-stack web application to manage student-internship-job interactions using
 💾 **Save response token as "Recruiter Token"**
 
 #### 5. Register Student
-**Method:** `POST` | **Endpoint:** `/api/auth/register` | **Token:** None
+```http
+POST /api/auth/register
+Content-Type: application/json
 
-```json
 {
   "username": "student1",
   "firstName": "John",
@@ -89,9 +187,10 @@ A full-stack web application to manage student-internship-job interactions using
 ```
 
 #### 6. Login Student
-**Method:** `POST` | **Endpoint:** `/api/auth/login` | **Token:** None
+```http
+POST /api/auth/login
+Content-Type: application/json
 
-```json
 {
   "email": "john@example.com",
   "password": "password123"
@@ -104,9 +203,11 @@ A full-stack web application to manage student-internship-job interactions using
 ### Phase 2: Profile Creation
 
 #### 7. Create Recruiter Profile
-**Method:** `POST` | **Endpoint:** `/api/recruiters` | **Token:** Recruiter
+```http
+POST /api/recruiters
+Authorization: Bearer <recruiter-token>
+Content-Type: application/json
 
-```json
 {
   "companyName": "Tech Corp",
   "companyDescription": "Leading tech company",
@@ -119,9 +220,11 @@ A full-stack web application to manage student-internship-job interactions using
 ```
 
 #### 8. Create Student Profile
-**Method:** `POST` | **Endpoint:** `/api/students` | **Token:** Student
+```http
+POST /api/students
+Authorization: Bearer <student-token>
+Content-Type: application/json
 
-```json
 {
   "collegeName": "ABC College",
   "degree": "B.Tech",
@@ -140,9 +243,11 @@ A full-stack web application to manage student-internship-job interactions using
 ### Phase 3: Job Management
 
 #### 9. Create Job Post
-**Method:** `POST` | **Endpoint:** `/api/jobPosts` | **Token:** Recruiter
+```http
+POST /api/jobPosts
+Authorization: Bearer <recruiter-token>
+Content-Type: application/json
 
-```json
 {
   "jobTitle": "Software Engineer",
   "jobDescription": "Develop and maintain software applications",
@@ -155,19 +260,27 @@ A full-stack web application to manage student-internship-job interactions using
 ```
 
 #### 10. Get Job Posts by Recruiter
-**Method:** `GET` | **Endpoint:** `/api/jobPosts/recruiter?email=alice@company.com` | **Token:** Recruiter
+```http
+GET /api/jobPosts/recruiter?email=alice@company.com
+Authorization: Bearer <recruiter-token>
+```
 
 #### 11. Get All Job Posts
-**Method:** `GET` | **Endpoint:** `/api/jobPosts` | **Token:** Any
+```http
+GET /api/jobPosts
+Authorization: Bearer <any-token>
+```
 
 ---
 
 ### Phase 4: Job Applications
 
 #### 12. Apply for Job
-**Method:** `POST` | **Endpoint:** `/api/jobapplications` | **Token:** Student
+```http
+POST /api/jobapplications
+Authorization: Bearer <student-token>
+Content-Type: application/json
 
-```json
 {
   "resumeLink": "https://example.com/resume.pdf",
   "studentId": 1,
@@ -177,29 +290,43 @@ A full-stack web application to manage student-internship-job interactions using
 *Note: Use actual IDs from your database*
 
 #### 13. Get Applications by Student
-**Method:** `GET` | **Endpoint:** `/api/jobapplications/student/{studentId}` | **Token:** Student
+```http
+GET /api/jobapplications/student/{studentId}
+Authorization: Bearer <student-token>
+```
 
 #### 14. Get Applications by Job Post
-**Method:** `GET` | **Endpoint:** `/api/jobapplications/job/{jobPostId}` | **Token:** Recruiter
+```http
+GET /api/jobapplications/job/{jobPostId}
+Authorization: Bearer <recruiter-token>
+```
 
 ---
 
 ### Phase 5: Profile Management
 
 #### 15. Get Recruiter by ID
-**Method:** `GET` | **Endpoint:** `/api/recruiters/id/{id}` | **Token:** Recruiter
+```http
+GET /api/recruiters/id/{id}
+Authorization: Bearer <recruiter-token>
+```
 
 #### 16. Get Student by ID
-**Method:** `GET` | **Endpoint:** `/api/students/id/{id}` | **Token:** Student
+```http
+GET /api/students/id/{id}
+Authorization: Bearer <student-token>
+```
 
 ---
 
 ### Phase 6: Admin Operations
 
 #### 17. Block/Unblock User
-**Method:** `POST` | **Endpoint:** `/api/admin/block` | **Token:** Admin
+```http
+POST /api/admin/block
+Authorization: Bearer <admin-token>
+Content-Type: application/json
 
-```json
 {
   "userId": 1,
   "block": true
@@ -207,139 +334,107 @@ A full-stack web application to manage student-internship-job interactions using
 ```
 
 #### 18. Get All User Statuses
-**Method:** `GET` | **Endpoint:** `/api/admin/status` | **Token:** Admin
+```http
+GET /api/admin/status
+Authorization: Bearer <admin-token>
+```
 
 #### 19. Get Dashboard Summary
-**Method:** `GET` | **Endpoint:** `/api/admin/summary` | **Token:** Admin
+```http
+GET /api/admin/summary
+Authorization: Bearer <admin-token>
+```
 
 ---
 
-## 🔐 Authentication Headers
+## 🔐 Authentication & Authorization
 
+### Token Usage Matrix
+
+| Endpoint Category | Required Token | Description |
+|-------------------|----------------|-------------|
+| `/api/auth/*` | None | Public authentication endpoints |
+| `/api/admin/*` | Admin Token | Administrative operations |
+| `/api/recruiters/*` | Recruiter Token | Recruiter profile management |
+| `/api/jobPosts/*` | Recruiter (POST), Any (GET) | Job posting and viewing |
+| `/api/students/*` | Student Token | Student profile management |
+| `/api/jobapplications/*` | Student/Recruiter | Application management |
+
+### Authentication Headers
 For all protected endpoints, include:
-```
+```http
 Authorization: Bearer <your-jwt-token>
 Content-Type: application/json
 ```
 
-## 📊 Token Usage Matrix
+---
 
-| Endpoint Category | Required Token |
-|-------------------|----------------|
-| `/api/auth/*` | None |
-| `/api/admin/*` | Admin Token |
-| `/api/recruiters/*` | Recruiter Token |
-| `/api/jobPosts/*` | Recruiter Token (POST), Any Token (GET) |
-| `/api/students/*` | Student Token |
-| `/api/jobapplications/*` | Student Token (Apply), Student/Recruiter Token (View) |
+## ✨ Features
+
+### Core Features
+- **Multi-role System**: Students, Recruiters, and Admins
+- **Secure Authentication**: JWT-based token system
+- **File Upload**: Resume and document management
+- **Email Notifications**: Automated alerts and updates
+- **Real-time Analytics**: Dashboard metrics and reporting
+
+### Student Features
+- Profile management with resume upload
+- Job search and filtering
+- Application tracking
+- Bookmark favorite opportunities
+- Email notifications for updates
+
+### Recruiter Features
+- Company profile management
+- Job posting and management
+- Application review and processing
+- Candidate shortlisting
+- Analytics and reporting
+
+### Admin Features
+- User management (block/unblock)
+- Platform analytics
+- Content moderation
+- Real-time user status monitoring
+- System health dashboard
+
+---
+
+## 🔍 Testing Tips
+
+### Database Management
+- **Use Actual IDs**: Always use real database IDs in requests
+- **Check Relationships**: Ensure foreign key constraints are met
+- **Data Validation**: Verify required fields are provided
+
+### Token Management
+- **Token Expiry**: Re-login if you receive 401 errors
+- **Role-based Access**: Use appropriate tokens for each endpoint
+- **Security**: Never share tokens in production
+
+### Data Formats
+- **Timestamps**: Use ISO 8601 format (`2025-07-19T10:00:00Z`)
+- **Email Format**: Ensure valid email addresses
+- **Phone Numbers**: Use proper phone number formats
+
+### Common Issues
+- **Duplicate Applications**: System prevents multiple applications to same job
+- **User Permissions**: Students can only access their own data
+- **Profile Dependencies**: Create profiles before posting jobs or applying
+
+---
 
 ## ⚡ Quick Start Checklist
 
 - [ ] Start API server on `localhost:8080`
+- [ ] Configure MySQL database connection
 - [ ] Register Admin, Recruiter, and Student users
 - [ ] Login each user type and save tokens
 - [ ] Create profiles for Recruiter and Student
 - [ ] Create job posts as Recruiter
 - [ ] Apply for jobs as Student
 - [ ] Test admin operations
-
-## 🔍 Testing Tips
-
-**Database IDs:** Always use actual IDs from your database responses, not the example values.
-
-**Token Expiry:** If you get 401 errors, re-login to get fresh tokens.
-
-**Timestamps:** Use ISO 8601 format: `2025-07-19T10:00:00Z`
-
-**Security:** Student operations are restricted to the authenticated user's own data.
-
-```
----
-
-## 🔐 Notes
-
-- Use `Authorization: Bearer <JWT_TOKEN>` for all protected routes
-- All job and student-related endpoints require proper authentication
-- You can register/login as STUDENT or RECRUITER
+- [ ] Verify email notifications
 
 ---
-
-## 🛠️ Tech Stack
-
-- Java 17
-- Spring Boot
-- Spring Security + JWT
-- MySQL
-- Postman for testing
-
----
-
-## ✅ Next Module
-
-- Implement Job Application module:
-  - Apply to job (STUDENT)
-  - View applicants (RECRUITER)
-  - Prevent duplicate applications
-
-## admin 
- - admin dashboard analysis
- - admin can block and unblock both student and recuiter
- - admin can view status of both student and recuiter in real time active(online/offline)
----
-
-## Key Modules
- - Authentication Module
-    - Student, Recruiter, and Admin logins
-    - Registration and role-based access
- 
- - Student Dashboard
-    - Profile management
-    - Resume upload
-    - View and apply to jobs/internships
-    - Application status tracking
- 
- - Recruiter Dashboard
-    - Post job/internship listings
-    - View applications
-    - Shortlist or reject candidates
- 
- - Admin Panel
-    - User management (approve/block)
-    - Content moderation
-    - System analytics and reporting
- 
- - Job/Internship Management
-    - Listing, searching, and filtering opportunities
-    - Bookmarking options
-    - Notifications and updates
-
-## Email notifcation
-  - JavaMailSender
-
-## upload file(resume)
-
-## admin analytics total jobpost and jobapplication
-
-## Folder Sturcutre
----
-```
-JOBPORTAL/
-├── src/
-│   └── main/
-│       └── java/
-│           └── com/
-│               └── zidio/
-│                   └── jobportal/
-│                       ├── controller/
-│                       ├── dto/
-│                       ├── entity/
-│                       ├── enums/
-│                       ├── repository/
-│                       ├── security/
-│                       ├── service/
-│                       └── JobportalApplication.java
-├── src/main/resources/
-│   └── application.properties
-```
----
-
