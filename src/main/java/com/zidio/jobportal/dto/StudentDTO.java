@@ -2,20 +2,15 @@ package com.zidio.jobportal.dto;
 
 public class StudentDTO {
     public Long id;
-    public String name;
-    public String email;
-    public String phone;
-    public String qualification;
+    public String collegeName;
+    public String degree;
+    public String branch;
+    public Integer graduationYear;
+    public Double cgpa;
+    public String skills;
+    public String bio;
     public String resumeURL;
+    public String profilePicture;
 
     public StudentDTO() {}
-
-    public StudentDTO(Long id, String name, String email, String phone, String qualification, String resumeURL) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.qualification = qualification;
-        this.resumeURL = resumeURL;
-    }
 }

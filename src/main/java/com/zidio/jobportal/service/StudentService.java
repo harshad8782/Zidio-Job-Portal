@@ -13,24 +13,29 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    public StudentDTO createOrUpdateStudent(StudentDTO dto) {
-        Student student = new Student(
-            dto.id,
-            dto.name,
-            dto.email,
-            dto.phone,
-            dto.qualification,
-            dto.resumeURL
-        );
+    @Autowired
+    private com.zidio.jobportal.repository.UserRepository userRepository;
+
+    public StudentDTO createOrUpdateStudent(StudentDTO dto, String email) {
+        Student student = new Student();
+        // Set fields from DTO to entity
+        student.setCollegeName(dto.collegeName);
+        student.setDegree(dto.degree);
+        student.setBranch(dto.branch);
+        student.setGraduationYear(dto.graduationYear);
+        student.setCgpa(dto.cgpa);
+        student.setSkills(dto.skills);
+        student.setBio(dto.bio);
+        student.setResumeUrl(dto.resumeURL);
+        student.setProfilePicture(dto.profilePicture);
+        // Set user relationship from authenticated email
+        com.zidio.jobportal.entity.User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("User not found for email: " + email));
+        student.setUser(user);
         Student saved = studentRepository.save(student);
         return mapToDTO(saved);
     }
 
-    public StudentDTO getStudentByEmail(String email) {
-        Student student = studentRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Student not found"));
-        return mapToDTO(student);
-    }
 
     public StudentDTO getStudentById(Long id) {
         Student student = studentRepository.findById(id)
@@ -39,13 +44,17 @@ public class StudentService {
     }
 
     private StudentDTO mapToDTO(Student student) {
-        return new StudentDTO(
-            student.getId(),
-            student.getName(),
-            student.getEmail(),
-            student.getPhone(),
-            student.getQualification(),
-            student.getResumeURL()
-        );
+        StudentDTO dto = new StudentDTO();
+        dto.id = student.getStudentId();
+        dto.collegeName = student.getCollegeName();
+        dto.degree = student.getDegree();
+        dto.branch = student.getBranch();
+        dto.graduationYear = student.getGraduationYear();
+        dto.cgpa = student.getCgpa();
+        dto.skills = student.getSkills();
+        dto.bio = student.getBio();
+        dto.resumeURL = student.getResumeUrl();
+        dto.profilePicture = student.getProfilePicture();
+        return dto;
     }
 }

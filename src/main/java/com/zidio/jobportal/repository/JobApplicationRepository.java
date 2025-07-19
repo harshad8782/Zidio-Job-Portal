@@ -9,6 +9,6 @@ import com.zidio.jobportal.entity.JobApplication;
 
 @Repository
 public interface JobApplicationRepository extends JpaRepository<JobApplication, Long> {
-    List<JobApplication> findByStudentId(Long studentId);
+    List<JobApplication> findByStudent_StudentId(Long studentId);
     List<JobApplication> findByJobPostId(Long jobPostId);
 }

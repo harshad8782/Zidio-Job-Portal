@@ -6,6 +6,7 @@ import com.zidio.jobportal.entity.User;
 import com.zidio.jobportal.enums.Role;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
+    Optional<User> findByUsername(String username);
     long countByRole(Role role);
     long countByIsBlocked(boolean isBlocked);
     long countByIsOnline(boolean isOnline);

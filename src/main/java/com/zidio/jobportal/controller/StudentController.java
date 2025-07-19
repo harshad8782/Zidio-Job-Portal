@@ -16,13 +16,11 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<StudentDTO> createOrUpdateStudent(@RequestBody StudentDTO dto) {
-        return ResponseEntity.ok(studentService.createOrUpdateStudent(dto));
+        // Get authenticated user's email from SecurityContext
+        String email = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getName();
+        return ResponseEntity.ok(studentService.createOrUpdateStudent(dto, email));
     }
 
-    @GetMapping("/email/{email}")
-    public ResponseEntity<StudentDTO> getByEmail(@PathVariable String email) {
-        return ResponseEntity.ok(studentService.getStudentByEmail(email));
-    }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<StudentDTO> getById(@PathVariable Long id) {

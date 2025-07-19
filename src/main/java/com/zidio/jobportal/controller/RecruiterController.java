@@ -12,10 +12,6 @@ public class RecruiterController {
     @Autowired
     private RecruiterService recruiterService;
 
-    @GetMapping("/email/{email}")
-    public ResponseEntity<RecruiterDTO> getByEmail(@PathVariable String email) {
-        return ResponseEntity.ok(recruiterService.getRecruiterByEmail(email));
-    }
     @GetMapping("/id/{id}")
     public ResponseEntity<RecruiterDTO> getById(@PathVariable Long id) {
         return ResponseEntity.ok(recruiterService.getById(id));
@@ -24,6 +20,8 @@ public class RecruiterController {
 
     @PostMapping
     public ResponseEntity<RecruiterDTO> createOrUpdate(@RequestBody RecruiterDTO dto) {
-        return ResponseEntity.ok(recruiterService.createOrUpdateRecruiter(dto));
+        // Get authenticated user's email from SecurityContext
+        String email = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getName();
+        return ResponseEntity.ok(recruiterService.createOrUpdateRecruiter(dto, email));
     }
 }

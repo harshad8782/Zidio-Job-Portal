@@ -7,5 +7,5 @@ import com.zidio.jobportal.entity.*;
 
 @Repository
 public interface RecruiterRepository extends JpaRepository<Recruiter, Long> {
-    Optional<Recruiter> findByEmail(String email);
+    // Recruiter does not have an email field. Use findByUser_Email if needed.
 }

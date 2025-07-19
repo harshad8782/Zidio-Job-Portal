@@ -45,7 +45,7 @@ public class JobApplicationService {
     }
 
     public List<JobApplicationDTO> getByStudentId(Long studentId) {
-        return applicationRepository.findByStudentId(studentId)
+        return applicationRepository.findByStudent_StudentId(studentId)
             .stream().map(this::mapToDTO)
             .collect(Collectors.toList());
     }
@@ -61,7 +61,7 @@ public class JobApplicationService {
             application.getId(),
             application.getResumeLink(),
             application.getApplicationDate(),
-            application.getStudent().getId(),
+            application.getStudent().getStudentId(),
             application.getJobPost().getId()
         );
     }
