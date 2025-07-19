@@ -23,7 +23,7 @@ public class AdminService {
             throw new IllegalArgumentException("Block value must be true or false");
         }
 
-        User user = userRepository.findByEmail(action.email)
+        User user = userRepository.findById(action.userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         user.setIsBlocked(action.block);
