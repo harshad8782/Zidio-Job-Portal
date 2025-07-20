@@ -346,11 +346,11 @@ Authorization: Bearer <admin-token>
 ```
 
 #### 20. Create a Notification
-```http:
+```http
 POST /api/notifications
 
-Headers:
 Authorization: Bearer <user-token>
+Content-Type: application/json
 (Use the token of the user who should receive the notification.)
 Body Example:
 {
@@ -365,12 +365,12 @@ An email is sent to the user's email address.
 ```
 
 #### 21. Get Notifications for the Logged-in User
-```http:
+```http
 GET /api/notifications
 
 Headers:
-
 Authorization: Bearer <user-token>
+Content-Type: application/json
 (Use the token of the user whose notifications you want to fetch.)
 Expected Result:
 
@@ -380,9 +380,8 @@ A list of notifications for the logged-in user.
 ```http:
 POST /api/notifications/read/{id}
 
-Headers:
-
 Authorization: Bearer <user-token>
+Content-Type: application/json
 (Use the token of the user who owns the notification.)
 Path Parameter:
 
