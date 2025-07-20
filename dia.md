@@ -1,8 +1,8 @@
-# Job & Internship Portal Data Model (Left-to-Right Flow)
+# Job & Internship Portal Data Model (Right-to-Left Flow)
 
 ```mermaid
-%%{init: {"theme": "dark", "flowchart": {"curve": "basis", "rankdir": "LR"}}}%%
-flowchart LR
+%%{init: {"theme": "dark", "flowchart": {"curve": "basis", "rankdir": "RL"}}}%%
+flowchart RL
     %% USERS TABLE
     users[["🧑 USERS<br/>user_id (PK)<br/>username<br/>email<br/>password_hash<br/>first_name<br/>last_name<br/>phone<br/>user_type (enum)<br/>is_active<br/>created_at<br/>updated_at<br/>last_login"]]
     style users fill:#FFD700,stroke:#333,stroke-width:1px
