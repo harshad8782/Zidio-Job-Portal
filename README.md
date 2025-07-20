@@ -76,6 +76,9 @@ JOBPORTAL/
 ```
 
 ---
+## 
+![Job & Internship Portal Data Model](erdiagram.png)
+---
 
 ## 🔧 Key Modules
 
