@@ -358,10 +358,6 @@ NOTE: Use the token of the user who should receive the notification.
   "message": "Your account has been successfully created.",
   "type": "INFO"
 }
-
-Expected Result
-The notification is saved in the database.
-An email is sent to the user's email address.
 ```
 
 #### 21. Get Notifications for the Logged-in User
@@ -372,8 +368,6 @@ Headers:
 Authorization: Bearer <user-token>
 Content-Type: application/json
 NOTE: Use the token of the user whose notifications you want to fetch.
-
-Expected Result: A list of notifications for the logged-in user.
 ```
 ### 22. Mark a Notification as Read
 ```http
@@ -384,14 +378,6 @@ Content-Type: application/json
 NOTE: Use the token of the user who owns the notification.
 
 Path Parameter: {id} The ID of the notification to mark as read.
-
-Expected Result
-The notification's isRead field is updated to true.
-The readAt timestamp is set.
-Testing Tips:
-Use Postman or any API client to send requests.
-Check the email inbox of the user to verify email delivery.
-Use the /api/notifications GET endpoint to confirm the notification is saved.
 ```
 ---
 
