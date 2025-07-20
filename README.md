@@ -377,7 +377,7 @@ Authorization: Bearer <user-token>
 Content-Type: application/json
 NOTE: Use the token of the user who owns the notification.
 
-Path Parameter: {id} The ID of the notification to mark as read.
+Path Parameter {id} The ID of the notification to mark as read.
 ```
 ---
 
