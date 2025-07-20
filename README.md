@@ -353,7 +353,6 @@ Authorization: Bearer <user-token>
 Content-Type: application/json
 NOTE: Use the token of the user who should receive the notification.
 
-Body Example
 {
   "title": "Welcome to ZIDIO Connect!",
   "message": "Your account has been successfully created.",
