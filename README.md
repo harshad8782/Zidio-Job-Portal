@@ -375,8 +375,9 @@ POST /api/notifications/read/{id}
 
 Authorization: Bearer <user-token>
 Content-Type: application/json
-NOTE: Use the token of the user who owns the notification.
-Path Parameter: The ID of the notification to mark as read.
+NOTE: Use the token of the user who owns the notification & *The ID of the notification to mark as read*.
+```
+
 ---
 
 ## 🔐 Authentication & Authorization
