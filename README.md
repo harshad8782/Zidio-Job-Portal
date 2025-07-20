@@ -371,23 +371,23 @@ GET /api/notifications
 Headers:
 Authorization: Bearer <user-token>
 Content-Type: application/json
-(Use the token of the user whose notifications you want to fetch.)
-Expected Result:
+NOTE: Use the token of the user whose notifications you want to fetch.
 
+Expected Result:
 A list of notifications for the logged-in user.
 ```
 ### 22. Mark a Notification as Read
-```http:
+```http
 POST /api/notifications/read/{id}
 
 Authorization: Bearer <user-token>
 Content-Type: application/json
-(Use the token of the user who owns the notification.)
+NOTE: Use the token of the user who owns the notification.
+
 Path Parameter:
-
 {id}: The ID of the notification to mark as read.
-Expected Result:
 
+Expected Result:
 The notification's isRead field is updated to true.
 The readAt timestamp is set.
 Testing Tips:
